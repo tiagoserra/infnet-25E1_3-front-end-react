@@ -13,10 +13,10 @@ const About = () => {
         <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
       </Content>
       <SocialLinks>
-        <a href="https://github.com/seu-usuario" target="_blank" rel="noopener noreferrer">
+        <a href="https://github.com/tiagoserra" target="_blank" rel="noopener noreferrer">
           <FaGithub size={30} />
         </a>
-        <a href="https://linkedin.com/in/seu-usuario" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.linkedin.com/in/tserra" target="_blank" rel="noopener noreferrer">
           <FaLinkedin size={30} />
         </a>
       </SocialLinks>

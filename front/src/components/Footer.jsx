@@ -13,7 +13,7 @@ const Footer = () => {
         <p className="mb-3">Desenvolvido por Tiago Serra</p>
         <div className="d-flex justify-content-center gap-3">
           <a 
-            href="https://github.com/seu-usuario" 
+            href="https://github.com/tiagoserra" 
             target="_blank" 
             rel="noopener noreferrer"
             className={isDarkTheme ? "text-light" : "text-dark"}
@@ -21,7 +21,7 @@ const Footer = () => {
             <FaGithub size={24} />
           </a>
           <a 
-            href="www.linkedin.com/in/tserra" 
+            href="https://www.linkedin.com/in/tserra" 
             target="_blank" 
             rel="noopener noreferrer"
             className={isDarkTheme ? "text-light" : "text-dark"}
