@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Container, Button, Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchTasksAsync, deleteTask } from '../redux/slices/taskSlice';
+import { fetchTasksAsync, deleteTaskAsync } from '../redux/slices/taskSlice';
 import TaskModal from '../components/TaskModal';
 
 const Home = () => {
@@ -45,7 +45,7 @@ const Home = () => {
   };
 
   const confirmDelete = () => {
-    dispatch(deleteTask(taskToDelete.id));
+    dispatch(deleteTaskAsync({ token: user.jwt, taskId: taskToDelete.id }));
     setDeleteModalOpen(false);
   };
 

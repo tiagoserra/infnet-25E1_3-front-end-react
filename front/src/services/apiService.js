@@ -47,3 +47,34 @@ export const postData = async (token, endpoint, data) => {
         throw error;
     }
 };
+
+export const putData = async (token, endpoint, data) => {
+    try {
+        const response = await api.put(endpoint, 
+            { data: data },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao atualizar dados:", error);
+        throw error;
+    }
+};
+
+export const deleteData = async (token, endpoint) => {
+    try {
+        const response = await api.delete(endpoint, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao excluir dados:", error);
+        throw error;
+    }
+};

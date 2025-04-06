@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, Label, Input, Alert } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { createTaskAsync, updateTask } from '../redux/slices/taskSlice';
+import { createTaskAsync, updateTaskAsync } from '../redux/slices/taskSlice';
 import taskTypes from '../assets/taskTypes.json';
 
 const TaskModal = ({ isOpen, toggle, task }) => {
@@ -45,7 +45,7 @@ const TaskModal = ({ isOpen, toggle, task }) => {
     }
     
     if (task) {
-      dispatch(updateTask({ ...formData, id: task.id }));
+      dispatch(updateTaskAsync({ token: user.jwt, taskData: { ...formData, id: task.id } }));
     } else {
       dispatch(createTaskAsync({ token: user.jwt, taskData: formData }));
     }
