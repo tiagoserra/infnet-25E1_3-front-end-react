@@ -23,6 +23,9 @@ const Header = () => {
           <NavLink tag={Link} to="/">Home</NavLink>
         </NavItem>
         <NavItem>
+          <NavLink tag={Link} to="/login">Login</NavLink>
+        </NavItem>
+        <NavItem>
           <NavLink tag={Link} to="/sobre">Sobre</NavLink>
         </NavItem>
         <NavItem className="d-flex align-items-center ms-2">
