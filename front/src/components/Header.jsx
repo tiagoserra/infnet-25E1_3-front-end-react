@@ -1,11 +1,15 @@
-import { Navbar, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import { Navbar, NavbarBrand, Nav, NavItem, NavLink, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import logo from '../assets/react.svg';
 import ThemeSwitcher from './ThemeSwitcher';
 import { useTheme } from '../contexts/ThemeContext';
+import { logout } from "../redux/slices/authSlice";
 
 const Header = () => {
   const { isDarkTheme } = useTheme();
+  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   
   return (
     <Navbar
@@ -19,12 +23,23 @@ const Header = () => {
         <img src={logo} alt="Logo" height="30" />
       </NavbarBrand>
       <Nav className="ms-auto" navbar>
-        <NavItem>
-          <NavLink tag={Link} to="/">Home</NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink tag={Link} to="/login">Login</NavLink>
-        </NavItem>
+        {user && (
+          <>
+            <NavItem>
+              <NavLink tag={Link} to="/">Home</NavLink>
+            </NavItem>
+            <NavItem>
+                <Button color="secondary" onClick={() => dispatch(logout())}>
+                    Logout
+                </Button>
+            </NavItem>
+          </>
+        )}
+        {!user &&(
+          <NavItem>
+            <NavLink tag={Link} to="/login">Login</NavLink>
+          </NavItem>
+        )}
         <NavItem>
           <NavLink tag={Link} to="/sobre">Sobre</NavLink>
         </NavItem>

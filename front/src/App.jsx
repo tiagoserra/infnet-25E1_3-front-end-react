@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import PrivateRoute from './components/PrivateRoute';
 
 import Home from './pages/Home';
 import About from './pages/About';
@@ -20,7 +21,11 @@ function App() {
           <Header />
           <main className="flex-grow-1">
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={
+                <PrivateRoute>
+                  <Home />
+                </PrivateRoute>
+              } />
               <Route path="/login" element={<Login />} />
               <Route path="/sobre" element={<About />} />
             </Routes>
@@ -31,7 +36,5 @@ function App() {
     </Provider>
   );
 }
-
-
 
 export default App;
