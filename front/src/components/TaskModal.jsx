@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, Label, Input, Alert } from 'reactstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { createTaskAsync, updateTask } from '../redux/slices/taskSlice';
 import taskTypes from '../assets/taskTypes.json';
 
-const TaskModal = ({ isOpen, toggle, task, onSave }) => {
+const TaskModal = ({ isOpen, toggle, task }) => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
   const [formData, setFormData] = useState({
     name: '',
     date: '',
@@ -15,8 +19,16 @@ const TaskModal = ({ isOpen, toggle, task, onSave }) => {
   useEffect(() => {
     if (task) {
       setFormData(task);
+    } else {
+      setFormData({
+        name: '',
+        date: '',
+        time: '',
+        description: '',
+        type: ''
+      });
     }
-  }, [task]);
+  }, [task, isOpen]);
 
   const handleChange = (e) => {
     setFormData({
@@ -31,7 +43,13 @@ const TaskModal = ({ isOpen, toggle, task, onSave }) => {
       setError('Todos os campos são obrigatórios!');
       return;
     }
-    onSave(formData);
+    
+    if (task) {
+      dispatch(updateTask({ ...formData, id: task.id }));
+    } else {
+      dispatch(createTaskAsync({ token: user.jwt, taskData: formData }));
+    }
+    
     toggle();
   };
 

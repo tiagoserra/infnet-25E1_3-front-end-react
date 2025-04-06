@@ -1,14 +1,29 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Container, Button, Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { FaEdit, FaTrash } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchTasksAsync, deleteTask } from '../redux/slices/taskSlice';
 import TaskModal from '../components/TaskModal';
 
 const Home = () => {
-  const [tasks, setTasks] = useState([]);
+  const dispatch = useDispatch();
+  const { tasks, status } = useSelector((state) => state.tasks);
+  const { user } = useSelector((state) => state.auth);
+  
   const [modalOpen, setModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
   const [taskToDelete, setTaskToDelete] = useState(null);
+
+  useEffect(() => {
+    console.log('User from Redux:', user);
+    if (user?.jwt) {
+      console.log('Token disponível:', user.jwt);
+      dispatch(fetchTasksAsync(user.jwt));
+    } else {
+      console.log('Token não disponível');
+    }
+  }, [dispatch, user]);
 
   const toggle = () => {
     setModalOpen(!modalOpen);
@@ -17,14 +32,6 @@ const Home = () => {
 
   const toggleDeleteModal = () => {
     setDeleteModalOpen(!deleteModalOpen);
-  };
-
-  const handleSave = (task) => {
-    if (selectedTask) {
-      setTasks(tasks.map(t => t.id === selectedTask.id ? { ...task, id: selectedTask.id } : t));
-    } else {
-      setTasks([...tasks, { ...task, id: Date.now() }]);
-    }
   };
 
   const handleEdit = (task) => {
@@ -38,9 +45,13 @@ const Home = () => {
   };
 
   const confirmDelete = () => {
-    setTasks(tasks.filter(task => task.id !== taskToDelete.id));
+    dispatch(deleteTask(taskToDelete.id));
     setDeleteModalOpen(false);
   };
+
+  if (status === 'loading') {
+    return <Container>Carregando...</Container>;
+  }
 
   return (
     <Container>
@@ -83,7 +94,6 @@ const Home = () => {
         isOpen={modalOpen}
         toggle={toggle}
         task={selectedTask}
-        onSave={handleSave}
       />
 
       <Modal isOpen={deleteModalOpen} toggle={toggleDeleteModal}>

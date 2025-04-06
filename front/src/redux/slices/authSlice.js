@@ -4,6 +4,7 @@ import { login } from '../../services/apiService'
 const userStoredKey = 'user-stored';
 
 const userStored = localStorage.getItem(userStoredKey);
+const parsedUser = userStored ? JSON.parse(userStored) : null;
 
 export const loginAsync = createAsyncThunk(
     'auth/login',
@@ -25,7 +26,7 @@ export const loginAsync = createAsyncThunk(
 const authSlice = createSlice({
     name: 'auth',
     initialState:{
-        user: userStored ? userStored : null,
+        user: parsedUser,
         status: 'idles',
         error: null
     },
